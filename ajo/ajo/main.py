@@ -1,25 +1,29 @@
 import argparse
 import ast
+import logging
+
+
+logger = logging.getLogger(__name__)
 
 
 def dump(node: ast.AST):
-    print(ast.dump(node, indent=4))
+    return ast.dump(node, indent=4)
 
 
 def main():
     parser = argparse.ArgumentParser()
     parser.add_argument("--input")
     args = parser.parse_args()
+    logging.basicConfig(level=logging.INFO)
     run(**args.__dict__)
 
 
 def process_class_field(node: ast.AnnAssign):
-    match node:
-        case ast.AnnAssign(annotation, target):
-            print("annotation")
-            dump(annotation)
-            print("target")
-            dump(target)
+    target: ast.Name = node.target
+    annotation: ast.Name = node.annotation
+    logging.info(f"{dump(annotation)=}")
+    logging.info(f"{dump(target)=}")
+    print(f"    {target.id}: {annotation.id},")
 
 
 def process_class_def(node: ast.ClassDef):
@@ -34,7 +38,9 @@ def process_module(node: ast.Module):
     for kid in node.body:
         match kid:
             case ast.ClassDef():
+                print(f"const {kid.name} = struct {{")
                 process_class_def(kid)
+                print(f"}};")
 
 
 def run(*, input: str):
@@ -42,3 +48,4 @@ def run(*, input: str):
         text = input_stream.read()
     tree = ast.parse(text)
     process_module(tree)
+    print(f"pub fn main() void {{}}")
