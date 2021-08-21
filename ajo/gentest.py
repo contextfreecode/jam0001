@@ -14,8 +14,17 @@ def ajo_compile(source: Path):
     dest = source.parent / source.with_suffix(".zig")
     with open(dest, "w") as out_stream:
         out_stream.write(stdout)
-    # Run zig.
-    subprocess.run(args=["zig", "run", str(dest)])
+    # Run zig, and capture out and err.
+    run_result = subprocess.run(
+        args=["zig", "run", str(dest)],
+        capture_output=True,
+    )
+    run_dest_stdout = source.parent / source.with_suffix(".stdout.txt")
+    with open(run_dest_stdout, "w") as dest_stream:
+        dest_stream.write(run_result.stdout.decode("utf-8"))
+    run_dest_stderr = source.parent / source.with_suffix(".stderr.txt")
+    with open(run_dest_stderr, "w") as dest_stream:
+        dest_stream.write(run_result.stderr.decode("utf-8"))
 
 
 def main():
