@@ -1,0 +1,5 @@
+dist
+env.sh
+__pycache__
+workspace.code-workspace
+notes.txt
