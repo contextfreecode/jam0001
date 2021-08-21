@@ -5,6 +5,7 @@ const Person = struct {
     age: int,
 };
 const Car = struct {
+    driver: Person,
     model: str,
     /// Age in years from birth or manufacture date rounded down.
     age: int,

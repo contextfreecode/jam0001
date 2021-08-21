@@ -8,15 +8,30 @@ Age in years from birth or manufacture date rounded down.
 """
 
 
+driver: Person
+
+
+def main():
+    person = load_person()
+    car = load_car()
+    combined_age = (person.age + car.age) // doc_age_sum
+
+
 class Person:
     name
     age
 
 
 class Car:
+    driver
     model: str
     age
 
 
 class Detail:
     age: float
+
+
+doc_age_sum = """
+Like, *really*, does it make sense to add these ages?
+"""
