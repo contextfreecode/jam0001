@@ -14,4 +14,9 @@ class Person:
 
 
 class Car:
+    model: str
     age
+
+
+class Detail:
+    age: float
