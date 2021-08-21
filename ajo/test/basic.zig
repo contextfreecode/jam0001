@@ -2,4 +2,7 @@ const Person = struct {
     name: str,
     age: int,
 };
-pub fn main() void {}
+const std = @import("std");
+pub fn main() void {
+    std.debug.print("Hi!\n", .{});
+}

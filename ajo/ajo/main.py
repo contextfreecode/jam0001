@@ -1,6 +1,7 @@
 import argparse
 import ast
 import logging
+import textwrap
 
 
 logger = logging.getLogger(__name__)
@@ -48,4 +49,10 @@ def run(*, input: str):
         text = input_stream.read()
     tree = ast.parse(text)
     process_module(tree)
-    print(f"pub fn main() void {{}}")
+    script = f"""
+        const std = @import("std");
+        pub fn main() void {{
+            std.debug.print("Hi!\\n", .{{}});
+        }}
+    """
+    print(textwrap.dedent(script).strip())
