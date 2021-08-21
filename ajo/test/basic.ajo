@@ -1,3 +1,17 @@
+name: str
+"""Could be full name or just preferred name."""
+
+
+age: int
+"""
+Age in years from birth or manufacture date rounded down.
+"""
+
+
 class Person:
-    name: str
-    age: int
+    name
+    age
+
+
+class Car:
+    age
